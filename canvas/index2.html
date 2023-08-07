@@ -1,0 +1,217 @@
+<! DOCTYPE html>
+	<html>
+	<head>
+		<script type="text/javascript" src="jquery.js">
+		</script>
+		<script type="text/javascript">
+
+			var x = 240;
+			var y = 240; 
+			//! cuando termine de descargar toda la pagina (significa que llego a la cascada final) ejecutame la funcion de inicio
+			$(document).ready(inicio);
+			function inicio(){
+				setTimeout('dibujar()',100);
+				$("#archivo").change(archivo);
+				$("#efectos").change(efectos);
+			}
+			function archivo(){
+				if($("#archivo").attr("value")=="nuevo"){
+					var canvas = document.getElementById("lienzo");
+					var contexto = canvas.getContext("2d");
+					contexto.clearRect(0,0,300,300);
+				}
+			}
+			function efectos(){
+				if($("#efectos").attr("value")== "negativo"){
+					var canvas = document.getElementById("lienzo"); 
+					var contexto = canvas.getContext("2d");
+					var imageData = contexto.getImageData(0,0,500,500);
+					var data = imageData.data;
+					for(var i=0;i<data.length;i+=4){
+						data[i] = 255 - data[i];
+						data[i+1] = 0 - data[i+1];
+						data[i+2] = 0 - data[i+2];
+					}
+					contexto.putImageData(imageData,0,0);
+				}
+				if($("#efectos").attr("value")== "aclarar"){
+					var canvas = document.getElementById("lienzo"); 
+					var contexto = canvas.getContext("2d");
+					var imageData = contexto.getImageData(0,0,500,500);
+					var data = imageData.data;
+					for(var i=0;i<data.length;i+=4){
+						data[i] = 255 - data[i];
+						data[i+1] = 0 - data[i+1];
+						data[i+2] = 0 - data[i+2];
+						for(var i=0;i<data.length;i+=4){
+							data[i] = data[i] + 100;
+							data[i+1] = data[i+1] + 100;
+							data[i+2] = data[i+2] + 100;
+						}
+
+					}
+					contexto.putImageData(imageData,0,0);
+				}
+				if($("#efectos").attr("value")== "oscurecer"){
+					var canvas = document.getElementById("lienzo"); 
+					var contexto = canvas.getContext("2d");
+					var imageData = contexto.getImageData(0,0,500,500);
+					var data = imageData.data;
+					for(var i=0;i<data.length;i+=4){
+						data[i] = 255 - data[i];
+						data[i+1] = 0 - data[i+1];
+						data[i+2] = 0 - data[i+2];
+						for(var i=0;i<data.length;i+=4){
+							data[i] = data[i] - 100;
+							data[i+1] = data[i+1] - 100;
+							data[i+2] = data[i+2] - 100;
+						}
+					}
+					contexto.putImageData(imageData,0,0);
+				}
+				if($("#efectos").attr("value")== "escaladegrises"){
+					var canvas = document.getElementById("lienzo"); 
+					var contexto = canvas.getContext("2d");
+					var imageData = contexto.getImageData(0,0,500,500);
+					var data = imageData.data;
+					for(var i=0;i<data.length;i+=4){
+						data[i] = 255 - data[i];
+						data[i+1] = 0 - data[i+1];
+						data[i+2] = 0 - data[i+2];
+					}
+					contexto.putImageData(imageData,0,0);
+				}
+				if($("#efectos").attr("value")== "solarizar"){
+					var canvas = document.getElementById("lienzo"); 
+					var contexto = canvas.getContext("2d");
+					var imageData = contexto.getImageData(0,0,500,500);
+					var data = imageData.data;
+					for(var i=0;i<data.length;i+=4){
+						data[i] = 255 - data[i];
+						data[i+1] = 0 - data[i+1];
+						data[i+2] = 0 - data[i+2];
+					}
+					contexto.putImageData(imageData,0,0);
+				}
+			}
+
+			function dibujar(){
+				var canvas = document.getElementById("lienzo"); 
+		        var contexto = canvas.getContext("2d");
+
+		        var img = new Image();
+		        img.src = "img/piedras.webp";
+
+		        img.onload = function() {
+		            contexto.drawImage(img, 10, 10);
+		            var imageData = contexto.getImageData(0, 0, 500, 500);
+		            var data = imageData.data;
+
+				   	/* for(var i=0;i<data.length;i+=4){
+				   	 	data[i] = 255 - data[i];
+				   	 	data[i+1] = 0 - data[i+1];
+				   	 	data[i+2] = 0 - data[i+2];
+				   	 }*/
+
+				   	 /*for(var i=0;i<data.length;i+=4){
+				   	 	data[i] = data[i] + 100;
+				   	 	data[i+1] = data[i+1] + 100;
+				   	 	data[i+2] = data[i+2] + 100;
+					 }*/
+
+				   	 /*for(var i=0;i<data.length;i+=4){
+				   	 	data[i] = data[i] - 100;
+				   	 	data[i+1] = data[i+1] - 100;
+				   	 	data[i+2] = data[i+2] - 100;
+				   	 }*/
+				   	 /*for(var i=0;i<data.length;i+=4){
+				   	 	data[i] = (data[i] + data[i+1] + data[i+2])/3;
+				   	 	data[i+1] = (data[i] + data[i+1] + data[i+2])/3;
+				   	 	data[i+2] = (data[i] + data[i+1] + data[i+2])/3;
+				   	 }*/
+				   	 /*for(var i=0;i<data.length;i+=4){
+				   	 if(data[i] < 122){data[i] = 0} else{data[i] = 255};
+				     if(data[i+1] < 122){data[i+1] = 0} else{data[i+1] = 255};
+				     if(data[i+2] < 122){data[i+2] = 0} else{data[i+2] = 255};
+
+					}*/
+					
+		            contexto.putImageData(imageData, 0, 0);
+		        };
+
+		        img.onerror = function() {
+		            console.error("Error al cargar la imagen.");
+		        };
+
+
+
+			}
+		</script>
+		<style type="text/css">
+			canvas{
+				border:0px solid black;
+				float:left;
+				background:white;
+			}
+			#herramientas{
+				width:50px;
+				height:300px;
+				border:0px solid black;
+				float:left;
+				background:grey;
+			}
+			#dialogos{
+				width:200px;
+				height:300px;
+				border:0px solid black;
+				float:left;
+				background:grey;
+			}
+			nav{
+				width:5440px;
+				height:30px;
+				background:grey;
+				padding:3px 3px 3px 3px;
+				margin-bottom:2px;
+			}
+			select{
+				background:grey;
+				color:white;
+				padding:0px;
+				margin:0px;
+			}
+			#contenedor{
+				margin:auto;
+			}
+			body{
+				background:black;
+			}
+
+		</style>
+
+	</head>
+	<body>
+		<div id="contenedor">
+			<nav>
+				<select id="archivo">
+					<option value="">Archivo</option>
+					<option value="Nuevo"></option>	
+					<option value="Abrir"></option>
+					<option value="Cerrar"></option>
+				</select>
+				<select id="archivo">
+					<option value="">Efectos</option>
+					<option value="negativo">Negativo</option>	
+					<option value="aclarar">Aclarar</option>
+					<option value="oscurecer">Oscurecer</option>
+					<option value="escaladegrises">escaladegrises</option>
+					<option value="solarizar">Solarizar</option>
+				</select>
+			</nav>	
+			<div id="herramientas"></div>
+			<canvas id="lienzo" width="300px" height="300px"></canvas>
+			<div id="dialogos"></div>
+		</div>
+	</body>
+	</html>	  
+<!-- cascada final -->
