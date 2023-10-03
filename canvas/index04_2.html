@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript">
+        $(document).ready(inicio);
+
+        function inicio() {
+            setTimeout(dibujar, 500);
+            setTimeout(dibujar, 1000);
+            $("#archivo").change(archivo);
+            $("#efectos").change(efectos);
+        }
+
+        function archivo() {
+            var canvas = document.getElementById("lienzo");
+            var contexto = canvas.getContext("2d");
+            if ($("#archivo").val() === "nuevo") {
+                contexto.clearRect(0, 0, 300, 300);
+            }
+            if ($("#archivo").val() === "abrir") {
+                $("body").append("<form method='POST' action='upload.php' enctype='multipart/form-data'><input type='file' name='archivo'><input type='submit'></form>");
+            }
+            if ($("#archivo").val() === "guardar") {
+                window.location = canvas.toDataURL("image/jpeg");
+            }
+        }
+
+        function reconocimientovocal() {
+            var canvas = document.getElementById("lienzo");
+            var contexto = canvas.getContext("2d");
+            var imageData = contexto.getImageData(0, 0, 500, 500);
+            var data = imageData.data;
+
+            if ($("#vocal").val() === "negativo") {
+                for (var i = 0; i < data.length; i += 4) {
+                    if (data[i] === 255) data[i] = 0;
+                    if (data[i + 1] === 0) data[i + 1] = 0;
+                    if (data[i + 2] === 0) data[i + 2] = 0;
+                }
+            }
+            if ($("#vocal").val() === "aclarar") {
+                for (var i = 0; i < data.length; i += 4) {
+                    data[i] = 255 - data[i];
+                    data[i + 1] = 0 - data[i + 1];
+                    data[i + 2] = 0 - data[i + 2];
+
+                    for (var j = 0; j < 3; j++) {
+                        data[i + j] = data[i + j] + 100;
+                    }
+                }
+            }
+            if ($("#vocal").val() === "oscurecer") {
+                for (var i = 0; i < data.length; i += 4) {
+                    data[i] = 255 - data[i];
+                    data[i + 1] = 0 - data[i + 1];
+                    data[i + 2] = 0 - data[i + 2];
+                    for (var j = 0; j < 3; j++) {
+                        data[i + j] = data[i + j] - 100;
+                    }
+                }
+            }
+            if ($("#vocal").val() === "escaladegrises") {
+                for (var i = 0; i < data.length; i += 4) {
+                    data[i] = 255 - data[i];
+                    data[i + 1] = 0 - data[i + 1];
+                    data[i + 2] = 0 - data[i + 2];
+                }
+            }
+            if ($("#vocal").val() === "solarizar") {
+                for (var i = 0; i < data.length; i += 4) {
+                    data[i] = 255 - data[i];
+                    data[i + 1] = 0 - data[i + 1];
+                    data[i + 2] = 0 - data[i + 2];
+                }
+            }
+
+            contexto.putImageData(imageData, 0, 0);
+        }
+
+        function dibujar() {
+            var canvas = document.getElementById("lienzo");
+            var contexto = canvas.getContext("2d");
+
+            var img = new Image();
+            img.src = "imagenes/inicial.jpeg";
+
+            img.onload = function() {
+                contexto.drawImage(img, 20, 20);
+                var imageData = contexto.getImageData(0, 0, 500, 500);
+                contexto.putImageData(imageData, 0, 0);
+            };
+
+            img.onerror = function() {
+                console.error("Error al cargar la imagen.");
+            };
+        }
+
+        function efectos() {
+            console.log("entro en cambiar efectos");
+            console.log($("#efectos").val());
+
+            var canvas = document.getElementById("lienzo");
+            var contexto = canvas.getContext("2d");
+            var imageData = contexto.getImageData(0, 0, 500, 500);
+            var data = imageData.data;
+
+            if ($("#efectos").val() === "negativo") {
+                for (var i = 0; i < data.length; i += 4) {
+                    data[i] = 255 - data[i];
+                    data[i + 1] = 0 - data[i + 1];
+                    data[i + 2] = 0 - data[i + 2];
+                }
+            }
+            if ($("#efectos").val() === "aclarar") {
+                for (var i = 0; i < data.length; i += 4) {
+                    data[i] = 255 - data[i];
+                    data[i + 1] = 0 - data[i + 1];
+                    data[i + 2] = 0 - data[i + 2];
+
+                    for (var j = 0; j < 3; j++) {
+                        data[i + j] = data[i + j] + 100;
+                    }
+                }
+            }
+            if ($("#efectos").val() === "oscurecer") {
+                for (var i = 0; i < data.length; i += 4) {
+                    data[i] = 255 - data[i];
+                    data[i + 1] = 0 - data[i + 1];
+                    data[i + 2] = 0 - data[i + 2];
+                    for (var j = 0; j < 3; j++) {
+                        data[i + j] = data[i + j] - 100;
+                    }
+                }
+            }
+            if ($("#efectos").val() === "escaladegrises") {
+                for (var i = 0; i < data.length; i += 4) {
+                    data[i] = 255 - data[i];
+                    data[i + 1] = 0 - data[i + 1];
+                    data[i + 2] = 0 - data[i + 2];
+                }
+            }
+            if ($("#efectos").val() === "solarizar") {
+                for (var i = 0; i < data.length; i += 4) {
+                    data[i] = 255 - data[i];
+                    data[i + 1] = 0 - data[i + 1];
+                    data[i + 2] = 0 - data[i + 2];
+                }
+            }
+            if ($("#efectos").val() === "desenfocar") {
+                for (var i = 0; i < data.length; i += 4) {
+                    if (data[i] < 122) {
+                        data[i] = 0;
+                    } else {
+                        data[i + 1] = 0 - data[i + 1];
+                        data[i + 2] = 0 - data[i + 2];
+                    }
+                }
+            }
+
+            contexto.putImageData(imageData, 0, 0);
+        }
+    </script>
+    <style type="text/css">
+        /* Estilos CSS aquí */
+    </style>
+</head>
+<body>
+   <div id="contenedor">
+      <nav>
+         <select id="archivo">
+            <option value="">Archivo</option>
+            <option value="nuevo">Nuevo</option>   
+            <option value="abrir">Abrir</option>
+            <option value="guardar">Guardar</option>
+            <option value="cerrar">Cerrar</option>
+         </select>
+         <select id="efectos">
+            <option value="">Efectos</option>
+            <option value="negativo">Negativo</option>   
+            <option value="aclarar">Aclarar</option>
+            <option value="oscurecer">Oscurecer</option>
+            <option value="escaladegrises">Escala de Grises</option>
+            <option value="solarizar">Solarizar</option>
+            <option value="desenfocar">desenfocar</option>
+         </select>
+         <input type="text" x-webkit-speech id="vocal" onwebkitspeechchange="reconocimientovocal()">
+      </nav>   
+      <div id="herramientas"></div>
+      <div class="herramienta"></div>
+      <div class="herramienta"></div>
+      <div class="herramienta"></div>
+      <div class="herramienta"></div>
+      <canvas id="lienzo" width="300px" height="300px"></canvas>
+      <div id="dialogos"></div>
+      <footer>Retocador de imagenes - (c) 2023 Cintia Zamudio</footer>
+   </div>
+</body>
+</html>

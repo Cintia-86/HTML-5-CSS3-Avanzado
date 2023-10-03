@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test de Archivo</title>
+    <!-- Asegúrate de incluir el enlace a jQuery antes de tu código JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<!-- Asegúrate de tener un elemento con el id "archivo" en tu HTML -->
+<select id="archivo">
+    <option value="nuevo">Nuevo Archivo</option>
+    <option value="existente">Archivo Existente</option>
+</select>
+
+<canvas id="lienzo" width="300" height="300"></canvas>
+
+<script>
+$(document).ready(function() {
+    // Agrega un evento de cambio al elemento con el id "archivo"
+    $("#archivo").change(function() {
+        if ($(this).val() === "nuevo") {
+            var canvas = document.getElementById("lienzo");
+            var contexto = canvas.getContext("2d");
+            contexto.clearRect(0, 0, 300, 300);
+        }
+    });
+});
+</script>
+
+</body>
+</html>
